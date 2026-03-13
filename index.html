@@ -34,7 +34,6 @@
       overflow-x: hidden;
     }
 
-    /* ── Background grid ── */
     body::before {
       content: '';
       position: fixed;
@@ -48,7 +47,6 @@
       z-index: 0;
     }
 
-    /* ── Glow blob ── */
     body::after {
       content: '';
       position: fixed;
@@ -69,7 +67,6 @@
       max-width: 860px;
     }
 
-    /* ── Header ── */
     header {
       text-align: center;
       padding: 4rem 0 2.5rem;
@@ -123,7 +120,6 @@
       letter-spacing: 0.05em;
     }
 
-    /* ── Search card ── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -198,7 +194,6 @@
     button:hover  { background: #2563eb; box-shadow: 0 0 28px rgba(59,130,246,0.5); }
     button:active { transform: scale(0.97); }
 
-    /* ── Status messages ── */
     #status {
       margin-top: 1rem;
       font-size: 0.82rem;
@@ -209,7 +204,6 @@
     #status.loading { color: var(--muted); }
     #status.ok      { color: var(--success); }
 
-    /* ── Results ── */
     #results { animation: fadeUp 0.4s ease both; }
 
     @keyframes fadeUp {
@@ -243,7 +237,6 @@
       letter-spacing: 0.06em;
     }
 
-    /* ── Table ── */
     .table-wrap {
       overflow-x: auto;
       border: 1px solid var(--border);
@@ -304,6 +297,175 @@
     .time-text { color: var(--muted); font-size: 0.8rem; }
     .room-text { color: #94a3b8; }
 
+    /* ── Contact Section ── */
+    .contact-section {
+      margin-top: 3rem;
+      animation: fadeUp 0.5s ease 0.1s both;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-label-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    .section-label-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 0 0 1px rgba(6,182,212,0.04), 0 20px 60px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent2), transparent);
+      opacity: 0.6;
+    }
+
+    .contact-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(6,182,212,0.2));
+      border: 1px solid rgba(6,182,212,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent2);
+      flex-shrink: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .contact-identity {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .contact-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .contact-role {
+      font-size: 0.75rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .contact-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      cursor: default;
+    }
+
+    a.contact-item {
+      cursor: pointer;
+    }
+
+    a.contact-item:hover {
+      border-color: rgba(6,182,212,0.4);
+      background: rgba(6,182,212,0.05);
+      transform: translateY(-1px);
+    }
+
+    .contact-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .icon-email  { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2); }
+    .icon-phone  { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.2); }
+    .icon-linkedin { background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.2); }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+
+    .contact-info-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .contact-info-value {
+      font-size: 0.82rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    a.contact-item .contact-info-value {
+      color: var(--accent2);
+    }
+
     /* ── Footer ── */
     footer {
       margin-top: 4rem;
@@ -313,7 +475,6 @@
       letter-spacing: 0.06em;
     }
 
-    /* ── No data ── */
     .empty-state {
       text-align: center;
       padding: 3rem 1rem;
@@ -349,6 +510,53 @@
   </div>
 
   <div id="results"></div>
+  <br> <br>
+
+  <!-- ── Contact Section ── -->
+  <div class="contact-section">
+    <div class="section-label">
+      <span class="section-label-text">Contact</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-top">
+        <div class="contact-avatar">AG</div>
+        <div class="contact-identity">
+          <div class="contact-name">Ahmed Gabr</div>
+          <div class="contact-role">AI Freshman · Nile University</div>
+        </div>
+      </div>
+
+      <div class="contact-divider"></div>
+
+      <div class="contact-grid">
+        <a class="contact-item" href="mailto:ahmed.gabr.me@gmail.com">
+          <div class="contact-icon icon-email">✉️</div>
+          <div class="contact-info">
+            <span class="contact-info-label">Email</span>
+            <span class="contact-info-value">ahmed.gabr.me@gmail.com</span>
+          </div>
+        </a>
+
+        <div class="contact-item">
+          <div class="contact-icon icon-phone">📱</div>
+          <div class="contact-info">
+            <span class="contact-info-label">Phone</span>
+            <span class="contact-info-value">01032802489</span>
+          </div>
+        </div>
+
+        <a class="contact-item" href="https://www.linkedin.com/in/ahmed-gabr-me" target="_blank" rel="noopener">
+          <div class="contact-icon icon-linkedin">💼</div>
+          <div class="contact-info">
+            <span class="contact-info-label">LinkedIn</span>
+            <span class="contact-info-value">ahmed-gabr-me</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <footer>
     Data is processed locally in your browser · IDs are never sent to any server
@@ -357,7 +565,6 @@
 </div>
 
 <script>
-  /* ── SHA-256 via SubtleCrypto (built into every modern browser) ── */
   async function sha256(str) {
     const buf = await crypto.subtle.digest(
       'SHA-256',
@@ -368,7 +575,6 @@
       .join('');
   }
 
-  /* ── Load data.json once, cache it ── */
   let _db = null;
   async function getDB() {
     if (_db) return _db;
