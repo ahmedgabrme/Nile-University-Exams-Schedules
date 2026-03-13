@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Midterm Schedule — Nile University</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0b0f1a;
+      --surface:  #111827;
+      --border:   #1e2d45;
+      --accent:   #3b82f6;
+      --accent2:  #06b6d4;
+      --text:     #e2e8f0;
+      --muted:    #64748b;
+      --success:  #10b981;
+      --error:    #ef4444;
+      --row-even: #0f172a;
+      --row-odd:  #111827;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1rem 4rem;
+      overflow-x: hidden;
+    }
+
+    /* ── Background grid ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Glow blob ── */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      padding: 4rem 0 2.5rem;
+    }
+
+    .logo-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .logo-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .univ-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #e2e8f0 30%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.6rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Search card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 0 1px rgba(59,130,246,0.05), 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .input-wrap {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+
+    .input-wrap::before {
+      content: '#';
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-size: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+      pointer-events: none;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+
+    input[type="text"]::placeholder { color: var(--muted); }
+
+    button {
+      padding: 0.85rem 1.8rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 0 20px rgba(59,130,246,0.3);
+    }
+
+    button:hover  { background: #2563eb; box-shadow: 0 0 28px rgba(59,130,246,0.5); }
+    button:active { transform: scale(0.97); }
+
+    /* ── Status messages ── */
+    #status {
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      min-height: 1.2rem;
+      transition: opacity 0.3s;
+    }
+    #status.error   { color: var(--error); }
+    #status.loading { color: var(--muted); }
+    #status.ok      { color: var(--success); }
+
+    /* ── Results ── */
+    #results { animation: fadeUp 0.4s ease both; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(59,130,246,0.15);
+      color: var(--accent2);
+      border: 1px solid rgba(59,130,246,0.25);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Table ── */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    thead tr {
+      background: rgba(59,130,246,0.08);
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      text-align: left;
+      padding: 0.8rem 1.2rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:nth-child(odd)  { background: var(--row-odd); }
+    tbody tr:nth-child(even) { background: var(--row-even); }
+    tbody tr:hover { background: rgba(59,130,246,0.07); }
+
+    td {
+      padding: 0.85rem 1.2rem;
+      vertical-align: middle;
+      color: var(--text);
+    }
+
+    .course-pill {
+      display: inline-block;
+      padding: 0.2rem 0.65rem;
+      background: rgba(6,182,212,0.12);
+      color: var(--accent2);
+      border: 1px solid rgba(6,182,212,0.25);
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+    }
+
+    .date-text { color: var(--text); }
+    .time-text { color: var(--muted); font-size: 0.8rem; }
+    .room-text { color: #94a3b8; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── No data ── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header>
+    <div class="logo-line">
+      <span class="logo-dot"></span>
+      <span class="univ-label">Nile University · Spring 2026</span>
+      <span class="logo-dot"></span>
+    </div>
+    <h1>Midterm Schedule</h1>
+    <p class="subtitle">Enter your student ID to view your personal exam timetable</p>
+  </header>
+
+  <div class="card">
+    <div class="input-row">
+      <div class="input-wrap">
+        <input type="text" id="sid-input" placeholder="e.g. 221000002"
+               maxlength="20" autocomplete="off" spellcheck="false"
+               onkeydown="if(event.key==='Enter') lookup()" />
+      </div>
+      <button onclick="lookup()">Look up →</button>
+    </div>
+    <div id="status"></div>
+  </div>
+
+  <div id="results"></div>
+
+  <footer>
+    Data is processed locally in your browser · IDs are never sent to any server
+  </footer>
+
+</div>
+
+<script>
+  /* ── SHA-256 via SubtleCrypto (built into every modern browser) ── */
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(str.trim().toLowerCase())
+    );
+    return Array.from(new Uint8Array(buf))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
+
+  /* ── Load data.json once, cache it ── */
+  let _db = null;
+  async function getDB() {
+    if (_db) return _db;
+    setStatus('loading', 'Loading schedule data…');
+    const res = await fetch('data.json');
+    if (!res.ok) throw new Error('Could not load data.json');
+    _db = await res.json();
+    return _db;
+  }
+
+  function setStatus(type, msg) {
+    const el = document.getElementById('status');
+    el.className = type;
+    el.textContent = msg;
+  }
+
+  async function lookup() {
+    const raw = document.getElementById('sid-input').value.trim();
+    if (!raw) { setStatus('error', 'Please enter your student ID.'); return; }
+
+    try {
+      const db   = await getDB();
+      const hash = await sha256(raw);
+      const exams = db[hash];
+
+      if (!exams || exams.length === 0) {
+        setStatus('error', `No exams found for ID "${raw}". Double-check and try again.`);
+        document.getElementById('results').innerHTML = '';
+        return;
+      }
+
+      setStatus('ok', `Found ${exams.length} exam${exams.length > 1 ? 's' : ''}.`);
+      renderTable(exams, raw);
+    } catch (err) {
+      setStatus('error', 'Error: ' + err.message);
+    }
+  }
+
+  function renderTable(exams, id) {
+    const rows = exams.map((e, i) => `
+      <tr>
+        <td style="color:var(--muted);font-size:0.75rem;">${String(i+1).padStart(2,'0')}</td>
+        <td><span class="course-pill">${e.course}</span></td>
+        <td>
+          <div class="date-text">${e.date}</div>
+          <div class="time-text">${e.time}</div>
+        </td>
+        <td class="room-text">${e.room}</td>
+      </tr>
+    `).join('');
+
+    document.getElementById('results').innerHTML = `
+      <div class="result-header">
+        <span class="result-title">Schedule for <span style="color:var(--accent2)">${id}</span></span>
+        <span class="badge">${exams.length} EXAM${exams.length > 1 ? 'S' : ''}</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Course</th>
+              <th>Date &amp; Time</th>
+              <th>Room</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    `;
+  }
+</script>
+</body>
+</html>
