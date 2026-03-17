@@ -297,6 +297,64 @@
     .time-text { color: var(--muted); font-size: 0.8rem; }
     .room-text { color: #94a3b8; }
 
+    /* ── Caution Banner ── */
+    .caution-banner {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: rgba(234, 179, 8, 0.08);
+      border: 1.5px solid rgba(234, 179, 8, 0.5);
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 28px rgba(234, 179, 8, 0.08), inset 0 0 40px rgba(234, 179, 8, 0.03);
+    }
+
+    .caution-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 14px 14px 0 0;
+      background: linear-gradient(90deg, transparent, rgba(234, 179, 8, 0.7), transparent);
+    }
+
+    .caution-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+      filter: drop-shadow(0 0 6px rgba(234,179,8,0.5));
+    }
+
+    .caution-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .caution-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fbbf24;
+    }
+
+    .caution-text {
+      font-size: 0.82rem;
+      color: #fde68a;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .caution-text strong {
+      color: #fcd34d;
+      font-weight: 500;
+    }
+
     /* ── Contact Section ── */
     .contact-section {
       margin-top: 3rem;
@@ -497,6 +555,19 @@
     <p class="subtitle">Enter your student ID to view your personal exam timetable</p>
   </header>
 
+  <!-- ── Caution Banner ── -->
+  <div class="caution-banner">
+    <span class="caution-icon">⚠️</span>
+    <div class="caution-body">
+      <span class="caution-title">Always verify manually</span>
+      <span class="caution-text">
+        This tool is provided for convenience only and <strong>may contain errors or outdated data.</strong>
+        Please cross-check your results against the <strong>official Nile University exam schedule</strong>
+        at least once before your exams. Do not rely solely on this tool.
+      </span>
+    </div>
+  </div>
+
   <div class="card">
     <div class="input-row">
       <div class="input-wrap">
@@ -531,11 +602,11 @@
       <div class="contact-divider"></div>
 
       <div class="contact-grid">
-        <a class="contact-item" href="mailto:ahmed.gabr.me@gmail.com">
+        <a class="contact-item" href="/cdn-cgi/l/email-protection#7e1f16131b1a50191f1c0c50131b3e19131f1712501d1113">
           <div class="contact-icon icon-email">✉️</div>
           <div class="contact-info">
             <span class="contact-info-label">Email</span>
-            <span class="contact-info-value">ahmed.gabr.me@gmail.com</span>
+            <span class="contact-info-value"><span class="__cf_email__" data-cfemail="4d2c25202829632a2c2f3f6320280d2a202c2421632e2220">[email&#160;protected]</span></span>
           </div>
         </a>
 
@@ -564,7 +635,7 @@
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   async function sha256(str) {
     const buf = await crypto.subtle.digest(
       'SHA-256',
@@ -635,17 +706,4 @@
         <table>
           <thead>
             <tr>
-              <th>#</th>
-              <th>Course</th>
-              <th>Date &amp; Time</th>
-              <th>Room</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    `;
-  }
-</script>
-</body>
-</html>
+        
