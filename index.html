@@ -584,35 +584,34 @@
       transition: height 0.7s ease;
     }
 
-    /* ── SMALL state (after audio ends) ── */
     .hero-media.shrunk {
-      padding: 0.7rem 1rem;
-      border-radius: 12px;
-    }
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+}
 
-    .hero-media.shrunk .hero-img {
-      width: 52px;
-      height: 52px;
-      max-height: 52px;
-      border-radius: 8px;
-      margin-right: 0.8rem;
-      float: left;
-    }
+.hero-media.shrunk .hero-img {
+  width: 52px;
+  height: 52px;
+  max-height: 52px;
+  border-radius: 8px;
+  margin-right: 0.8rem;
+  float: left;
+}
 
-    .hero-media.shrunk .audio-wrap {
-      padding: 0;
-      border-top: none;
-    }
+.hero-media.shrunk .audio-wrap {
+  padding: 0;
+  border-top: none;
+}
 
-    .hero-media.shrunk .audio-label {
-      font-size: 0.72rem;
-      margin-bottom: 0.4rem;
-    }
+.hero-media.shrunk .audio-label {
+  font-size: 0.72rem;
+  margin-bottom: 0.4rem;
+}
 
-    .hero-media.shrunk audio {
-      width: 100%;
-      height: 40px;
-    }
+.hero-media.shrunk audio {
+  width: 100%;
+  height: 40px;
+}
 
     .empty-state {
       text-align: center;
@@ -667,7 +666,7 @@
     <img src="استرها معانا يا رب.jpg" alt="استرها معانا يا رب" class="hero-img" />
     <div class="audio-wrap">
       <span class="audio-label">🎵 استرها معانا يا رب</span>
-      <audio id="bg-audio" controls autoplay>
+      <audio id="bg-audio" controls autoplay muted>
         <source src="استرها معانا يارب محمد هنيدي فول الصين العظيم.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
@@ -776,19 +775,54 @@
       setStatus('error', 'Error: ' + err.message);
     }
   }
+  function formatTime12(time) {
+
+  // Already AM/PM
+  if (time.toUpperCase().includes('AM') ||
+      time.toUpperCase().includes('PM')) {
+    return time;
+  }
+
+  // Convert from 24h
+  const [h, m] = time.split(':');
+
+  let hour = parseInt(h);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+
+  hour = hour % 12;
+
+  if (hour === 0)
+    hour = 12;
+
+  return `${hour}:${m} ${ampm}`;
+}
 
   function renderTable(exams, id) {
     const rows = exams.map((e, i) => `
-      <tr>
-        <td style="color:var(--muted);font-size:0.75rem;">${String(i+1).padStart(2,'0')}</td>
-        <td><span class="course-pill">${e.course}</span></td>
-        <td>
-          <div class="date-text">${e.date}</div>
-          <div class="time-text">${e.time}</div>
-        </td>
-        <td class="room-text">${e.room}</td>
-      </tr>
-    `).join('');
+  <tr>
+    <td style="color:var(--muted);font-size:0.75rem;">
+      ${String(i+1).padStart(2,'0')}
+    </td>
+
+    <td>
+      <span class="course-pill">${e.course}</span>
+    </td>
+
+    <td>
+      <div class="date-text">${e.date}</div>
+      <div class="time-text">${formatTime12(e.time)}</div>
+    </td>
+
+    <td class="room-text">${e.room}</td>
+
+    <td>
+      <button class="calendar-btn"
+        onclick='addToCalendar(${JSON.stringify(e)})'>
+        📅 Add
+      </button>
+    </td>
+  </tr>
+`).join('');
 
     document.getElementById('results').innerHTML = `
       <div class="result-header">
@@ -803,50 +837,81 @@
               <th>Course</th>
               <th>Date &amp; Time</th>
               <th>Room</th>
+              <th>Calendar</th>
             </tr>
           </thead>
           <tbody>${rows}</tbody>
         </table>
       </div>
-    `;
+    `;}
+function addToCalendar(e) {
+
+  // Parse date manually
+  // Example:
+  // "Monday, 01 June 2026"
+  // "2:30 PM"
+
+  const full = `${e.date} ${e.time}`;
+
+  const start = new Date(full);
+
+  if (isNaN(start.getTime())) {
+    alert('Could not parse exam date/time.');
+    return;
   }
+
+  // 2-hour exam duration
+  const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+
+  function googleFormat(date) {
+    const yyyy = date.getUTCFullYear();
+    const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(date.getUTCDate()).padStart(2, '0');
+
+    const hh = String(date.getUTCHours()).padStart(2, '0');
+    const mi = String(date.getUTCMinutes()).padStart(2, '0');
+    const ss = String(date.getUTCSeconds()).padStart(2, '0');
+
+    return `${yyyy}${mm}${dd}T${hh}${mi}${ss}Z`;
+  }
+
+  const url =
+    `https://calendar.google.com/calendar/render?action=TEMPLATE` +
+    `&text=${encodeURIComponent(e.course + ' Exam')}` +
+    `&details=${encodeURIComponent('Final Exam\nRoom: ' + e.room)}` +
+    `&location=${encodeURIComponent(e.room)}` +
+    `&dates=${googleFormat(start)}/${googleFormat(end)}`;
+
+  window.open(url, '_blank');
+}
 </script>
 <script>
+  // Browsers allow autoplay only when muted.
+  // On first interaction: unmute. When track ends: shrink the media block.
   (function () {
     const audio = document.getElementById('bg-audio');
     const media = document.querySelector('.hero-media');
 
-    // Set volume to 50%
     audio.volume = 0.5;
 
-    // Prevent autoplay loop
-    audio.loop = false;
-
-    // Browsers only allow autoplay when muted
     function unmute() {
       audio.muted = false;
-
-      // Only try autoplay once
-      if (audio.paused && audio.currentTime === 0) {
-        audio.play().catch(() => {});
-      }
-
+      audio.play().catch(() => {});
       document.removeEventListener('click', unmute);
       document.removeEventListener('keydown', unmute);
       document.removeEventListener('touchstart', unmute);
     }
-
     document.addEventListener('click', unmute);
     document.addEventListener('keydown', unmute);
     document.addEventListener('touchstart', unmute);
 
-   audio.addEventListener('ended', () => {
+    audio.addEventListener('ended', () => {
   audio.pause();
   audio.currentTime = 0;
 
   media.classList.add('shrunk');
 });
-})();
+  })();
 </script>
 </body>
 </html>
